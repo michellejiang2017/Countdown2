@@ -1,4 +1,7 @@
 import { useState } from "react";
+import GenreButtons from "./components/GenreButtons";
+import BookList from "./components/BookList";
+
 
 const bookData = {
   "fiction": [
@@ -19,6 +22,7 @@ const bookData = {
 };
 
 
+
 function App() {
   const [showFiction, setShowFiction] = useState(true);
   const [showNonFiction, setShowNonFiction] = useState(true);
@@ -28,51 +32,25 @@ function App() {
     <div>
       <h1>Online Bookstore</h1>
 
-      <div>
-        <button onClick={() => setShowFiction(!showFiction)}>
-          {showFiction ? "Hide Fiction" : "Show Fiction"}
-        </button>
-
-        <button onClick={() => setShowNonFiction(!showNonFiction)}>
-          {showNonFiction ? "Hide Non-Fiction" : "Show Non-Fiction"}
-        </button>
-
-        <button onClick={() => setShowChildren(!showChildren)}>
-          {showChildren ? "Hide Children" : "Show Children"}
-        </button>
-      </div>
+      <GenreButtons
+        showFiction={showFiction}
+        setShowFiction={setShowFiction}
+        showNonFiction={showNonFiction}
+        setShowNonFiction={setShowNonFiction}
+        showChildren={showChildren}
+        setShowChildren={setShowChildren}
+      />
 
       {showFiction && (
-        <div>
-          <h2>Fiction:</h2>
-          {bookData.fiction.map((book, index) => (
-            <p key={index}>
-              {book.title}, {book.author}, ${book.price}
-            </p>
-          ))}
-        </div>
+        <BookList title="Fiction:" books={bookData.fiction} />
       )}
 
       {showNonFiction && (
-        <div>
-          <h2>Non-Fiction:</h2>
-          {bookData["non-fiction"].map((book, index) => (
-            <p key={index}>
-              {book.title}, {book.author}, ${book.price}
-            </p>
-          ))}
-        </div>
+        <BookList title="Non-Fiction:" books={bookData["non-fiction"]} />
       )}
 
       {showChildren && (
-        <div>
-          <h2>Children:</h2>
-          {bookData.children.map((book, index) => (
-            <p key={index}>
-              {book.title}, {book.author}, ${book.price}
-            </p>
-          ))}
-        </div>
+        <BookList title="Children:" books={bookData.children} />
       )}
     </div>
   );
