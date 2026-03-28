@@ -1,4 +1,4 @@
-import 'style.css';
+import { useState } from "react";
 
 const bookData = {
   "fiction": [
@@ -18,9 +18,64 @@ const bookData = {
   ]
 };
 
+
 function App() {
-    return ( 
-        <div className="app">
-            </div>
-    )
+  const [showFiction, setShowFiction] = useState(true);
+  const [showNonFiction, setShowNonFiction] = useState(true);
+  const [showChildren, setShowChildren] = useState(true);
+
+  return (
+    <div>
+      <h1>Online Bookstore</h1>
+
+      <div>
+        <button onClick={() => setShowFiction(!showFiction)}>
+          {showFiction ? "Hide Fiction" : "Show Fiction"}
+        </button>
+
+        <button onClick={() => setShowNonFiction(!showNonFiction)}>
+          {showNonFiction ? "Hide Non-Fiction" : "Show Non-Fiction"}
+        </button>
+
+        <button onClick={() => setShowChildren(!showChildren)}>
+          {showChildren ? "Hide Children" : "Show Children"}
+        </button>
+      </div>
+
+      {showFiction && (
+        <div>
+          <h2>Fiction:</h2>
+          {bookData.fiction.map((book, index) => (
+            <p key={index}>
+              {book.title}, {book.author}, ${book.price}
+            </p>
+          ))}
+        </div>
+      )}
+
+      {showNonFiction && (
+        <div>
+          <h2>Non-Fiction:</h2>
+          {bookData["non-fiction"].map((book, index) => (
+            <p key={index}>
+              {book.title}, {book.author}, ${book.price}
+            </p>
+          ))}
+        </div>
+      )}
+
+      {showChildren && (
+        <div>
+          <h2>Children:</h2>
+          {bookData.children.map((book, index) => (
+            <p key={index}>
+              {book.title}, {book.author}, ${book.price}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
+
+export default App;
